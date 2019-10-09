@@ -6,9 +6,6 @@
     <style>
         #demo {
             font-family: 'Helvetica', Arial, sans-serif;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 300px);
-            grid-gap: 10px;
         }
         a {
             text-decoration: none;
@@ -18,6 +15,16 @@
             line-height: 1.5em;
             margin-bottom: 20px;
         }
+        ul{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 300px);
+            grid-gap: 10px;
+            grid-template-rows: auto;
+        }
+        .imge{
+            width: 200px;
+            height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -25,8 +32,6 @@
     <div id="exemple">
         <iframe src="https://data.nantesmetropole.fr/explore/embed/dataset/244400404_agenda-evenements-nantes-nantes-metropole/table/?disjunctive.emetteur&disjunctive.rubrique&disjunctive.lieu&disjunctive.ville&static=false&datasetcard=false" width="400" height="300" frameborder="0"></iframe>
     </div>
-    <h1>L'app est lancée</h1>
-    <p> vuejs/vue@ {{ title }} </p>
     <ul>
         <li v-for="event in records">
      <!--       <a :href="event.html_url" target="_blank" class="record">{{ event }}</a>-->
@@ -35,9 +40,7 @@
              <span>Lieu event : </span><span class="lieu">{{ event.fields.lieu  }}</span><br>
              <span>Date event : </span><span class="date">{{ event.fields.date }}</span>
             <br><br>
-            <div ><!--:style="background-image: url=('event.fields.media_1')"-->
-                {{ event.fields.media_1 }}
-            </div>
+            <img class="imge" :src="event.fields.media_1"/>
         </li>
     </ul>
 
