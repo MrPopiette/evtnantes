@@ -38,7 +38,7 @@
              <span>Nom event : </span><span class="name">{{ event.fields.nom }}</span>
             <br>
              <span>Lieu event : </span><span class="lieu">{{ event.fields.lieu  }}</span><br>
-             <span>Date event : </span><span class="date">{{ event.fields.date }}</span>
+             <span>Date event : </span><span class="date">{{ event.fields.date }} {{ event.fields.heure_debut}}</span>
             <br><br>
             <img class="imge" :src="event.fields.media_1"/>
         </li>
