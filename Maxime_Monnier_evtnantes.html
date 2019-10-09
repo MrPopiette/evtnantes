@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:background-image="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #demo {
+            font-family: 'Helvetica', Arial, sans-serif;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 300px);
+            grid-gap: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #f66;
+        }
+        li {
+            line-height: 1.5em;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+<div id="demo">
+    <div id="exemple">
+        <iframe src="https://data.nantesmetropole.fr/explore/embed/dataset/244400404_agenda-evenements-nantes-nantes-metropole/table/?disjunctive.emetteur&disjunctive.rubrique&disjunctive.lieu&disjunctive.ville&static=false&datasetcard=false" width="400" height="300" frameborder="0"></iframe>
+    </div>
+    <h1>L'app est lancée</h1>
+    <p> vuejs/vue@ {{ title }} </p>
+    <ul>
+        <li v-for="event in records">
+     <!--       <a :href="event.html_url" target="_blank" class="record">{{ event }}</a>-->
+             <span>Nom event : </span><span class="name">{{ event.fields.nom }}</span>
+            <br>
+             <span>Lieu event : </span><span class="lieu">{{ event.fields.lieu  }}</span><br>
+             <span>Date event : </span><span class="date">{{ event.fields.date }}</span>
+            <br><br>
+            <div ><!--:style="background-image: url=('event.fields.media_1')"-->
+                {{ event.fields.media_1 }}
+            </div>
+        </li>
+    </ul>
 
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var apiUrl = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_agenda-evenements-nantes-nantes-metropole&facet=emetteur&facet=rubrique&facet=lieu&facet=ville';
+
+
+    var demo = new Vue({
+        el: "#demo", // l'élément sur lequel attacher la vue
+        created: function () {
+            // code lancé au démarrage
+            this.fetchData();
+        },
+        mounted: function () {
+            // code lancé quand la vue est attachée à la page
+        },
+        updated: function () {
+            // code lancé quand la vue est mise à jour
+        },
+        watch: function () {
+            title: 'chat';
+
+        },
+        destroyed: function () {
+            // code lancé quand la vue est détruite
+        },
+        data: {
+            // ben ici y a vos données statiques
+            title: "Test watch and data function",
+            records: [],
+
+        },
+        filter:{
+            truncate: function (v) {
+                var newline = v.indexOf('\n')
+                return newline > 0 ? v.slice(0, newline) : v
+            },
+            formatDate: function (v) {
+                return v.replace(/T|Z/g, ' ')
+            }
+        },
+        methods: {
+            // ici les fonctions à rendre disponibles dans le HTML
+            fetchData: function () {
+                var self = this;
+                axios.get(apiUrl)
+                    .then(response =>
+                    {self.records = response.data.records;
+                        console.log(response.data.records);
+                    })
+
+        },
+        computed: {
+            // ici on met les données à recalculer à la volée
+            // à chaque refresh
+        }
+    }})
+</script>
 </body>
 </html>
