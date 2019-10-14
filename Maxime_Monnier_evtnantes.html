@@ -164,6 +164,7 @@
     </style>
 </head>
 <body>
+
 <div id="demo">
 
     <div class="search-wrapper">
@@ -188,7 +189,7 @@
                  <span>Nom event : </span><span class="name">{{ event.fields.nom }}</span>
                 <br>
                  <span>Lieu event : </span><span class="lieu">{{ event.fields.lieu  }}</span><br>
-                 <span>Date event : </span><span class="date">{{ event.fields.date }} {{ event.fields.heure_debut}}</span>
+                 <span>Date event : </span><span class="date">{{ event.fields.date | moment }} {{ event.fields.heure_debut}}</span>
                 <br><br>
                 <img class="imge" :src="event.fields.media_1"/>
             </li>
@@ -200,7 +201,7 @@
                  <span>Nom event : </span><span class="name">{{ event.fields.nom }}</span>
                 <br>
                  <span>Lieu event : </span><span class="lieu">{{ event.fields.lieu  }}</span><br>
-                 <span>Date event : </span><span class="date">{{ event.fields.date }} {{ event.fields.heure_debut}}</span>
+                 <span>Date event : </span><span class="date">{{ event.fields.date | moment }} {{ event.fields.heure_debut}}</span>
                 <br><br>
                 <img class="imge" :src="event.fields.media_1"/>
             </li>
@@ -210,13 +211,13 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="moment.js"></script>
 <script>
+
     var apiUrl = 'https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_agenda-evenements-nantes-nantes-metropole&facet=emetteur&facet=rubrique&facet=lieu&facet=ville';
 
-
-
-
     var demo = new Vue({
+
         el: "#demo", // l'élément sur lequel attacher la vue
         created: function () {
             // code lancé au démarrage
@@ -242,14 +243,16 @@
             layout: 'grid',
 
         },
-        filter:{
+        filters:{
             truncate: function (v) {
                 var newline = v.indexOf('\n')
                 return newline > 0 ? v.slice(0, newline) : v
             },
-            formatDate: function (v) {
-                return v.replace(/T|Z/g, ' ')
+            moment: function (date) {
+                console.log('a');
+                return moment(String(date)).format('DD/MM/YYYY');
             }
+
         },
         methods: {
             // ici les fonctions à rendre disponibles dans le HTML
